@@ -6,58 +6,51 @@ An easy way to require all files within a directory.
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Build Status][travis-image]][travis-url]
 
-## Usage
+## Changes
+```js
+  // options.indexToParent -- Boolean, default false
+
+  // if traversing multiple sub directories, the index will take the name of the folder
+
+  //--dummy
+  //  |--index.js
+  //  |--file.js
+  //--anotherDummy
+  //  |--index.js
+
+  // will result to
+  //  { dummy: fromDummyIndex, file: fromFile, anotherDummy: fromAnotherDummyIndex }
+
+  // options.dupKeysSuffix -- String, default 'Mod'
+  
+  // on key conflict, suffix is supplied
+
+  //--dummy
+  //  |--index.js
+  //  |--dummy.js
+
+  // will result to
+  // { dummy: fromDummyIndex, dummyMod: fromDummyDummy }
+
+  // options.excludeRootFile  -- String, default undefined
+
+  // if you want to exclude a file on root dir
+
+  // { excludeRootFile: 'index' }
+
+  //--dummy
+  //  |--index.js
+  //  |--file.js
+
+  // will result to
+  // { file: fromFile }
+
+  // options.filter -- Regex, default /^([^\.].*)\.js(on)?$/
+  // options.excludeDirs -- Regex, default /^(__tests__|\.).*$/
+  // options.recursive -- Boolean, default false
+  // options.
 
 ```js
-var controllers = require('require-all')({
-  dirname     :  __dirname + '/controllers',
-  filter      :  /(.+Controller)\.js$/,
-  excludeDirs :  /^\.(git|svn)$/,
-  recursive   : true
-});
-
-// controllers now is an object with references to all modules matching the filter
-// for example:
-// { HomeController: function HomeController() {...}, ...}
-```
-
-## Advanced usage
-
-If your objective is to simply require all .js and .json files in a directory you can just pass a string to require-all:
-
-``` js
-var libs = require('require-all')(__dirname + '/lib');
-```
-
-### Constructed object usage
-
-If your directory contains files that all export constructors, you can require them all and automatically construct the objects using `resolve`:
-
-```js
-var controllers = require('require-all')({
-  dirname     :  __dirname + '/controllers',
-  filter      :  /(.+Controller)\.js$/,
-  resolve     : function (Controller) {
-    return new Controller();
-  }
-});
-```
-
-### Alternative property names
-
-If your directory contains files where the names do not match what you want in the resulting property (for example, you want camelCase but the file names are snake_case), then you can use the `map` function. The `map` function is called on both file and directory names, as they are added to the resulting object.
-
-```js
-var controllers = require('require-all')({
-  dirname :  __dirname + '/controllers',
-  filter  :  /(.+Controller)\.js$/,
-  map     : function (name, path) {
-    return name.replace(/_([a-z])/g, function (m, c) {
-      return c.toUpperCase();
-    });
-  }
-});
-```
 
 [npm-image]: https://img.shields.io/npm/v/require-all.svg
 [npm-url]: https://npmjs.org/package/require-all

@@ -8,7 +8,10 @@
     "Nuno Job <nunojobpinto@gmail.com> (http://nunojob.com)"
   ],
   "license": "MIT",
-  "repository": "felixge/node-require-all",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felixge/node-require-all.git"
+  },
   "devDependencies": {
     "semver": "4.3.2"
   },
@@ -23,5 +26,13 @@
   },
   "scripts": {
     "test": "node test/test.js"
+  },
+  "bugs": {
+    "url": "https://github.com/felixge/node-require-all/issues"
+  },
+  "homepage": "https://github.com/felixge/node-require-all#readme",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
   }
 }
